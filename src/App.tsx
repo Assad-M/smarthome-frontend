@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from "./pages/User/UserDashboard";
 import ProviderDashboard from "./pages/Provider/ProviderDashboard";
+import Register from "./pages/Register";
 
 
 
@@ -35,6 +36,7 @@ const App = () => {
 
           {/* Root */}
           <Route path="/" element={<RootRedirect />} />
+        <Route path="/register" element={<Register />} />
 
           {/* Public */}
           <Route
