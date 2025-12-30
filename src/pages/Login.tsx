@@ -4,7 +4,6 @@ import api from "../api/api";
 
 const Login = () => {
   const { login } = useAuth();
-  const [role, setRole] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
