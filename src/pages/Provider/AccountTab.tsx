@@ -1,16 +1,20 @@
 import { useState } from "react";
 import api from "../../api/api";
 
-const AccountTab = () => {
-  const [oldPassword, setOldPassword] = useState("");
+interface Props {
+  handleLogout: () => void;
+}
+
+const AccountTab: React.FC<Props> = ({ handleLogout }) => {
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChangePassword = async () => {
-    setError(null);
     setMessage(null);
+    setError(null);
 
     if (newPassword !== confirmPassword) {
       setError("New password and confirm password do not match");
@@ -19,52 +23,49 @@ const AccountTab = () => {
 
     try {
       const res = await api.post("/auth/change-password", {
-        oldPassword,
+        currentPassword,
         newPassword,
       });
-
-      // Use response to set feedback
-      if (res.data?.success) {
-        setMessage("Password changed successfully");
-        // Optionally clear input fields
-        setOldPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
-      } else {
-        setError(res.data?.message || "Failed to change password");
-      }
+      setMessage(res.data?.message || "Password changed successfully");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
     } catch (err: any) {
-      setError(err.response?.data?.message || "Error changing password");
+      setError(err.response?.data?.message || "Failed to change password");
     }
   };
 
   return (
-    <div>
-      <h2>Change Password</h2>
+    <div style={{ maxWidth: "400px", margin: "0 auto" }}>
+      <h2>Account Settings</h2>
+
       <input
         type="password"
-        placeholder="Old password"
-        value={oldPassword}
-        onChange={(e) => setOldPassword(e.target.value)}
+        placeholder="Current Password"
+        value={currentPassword}
+        onChange={(e) => setCurrentPassword(e.target.value)}
       />
-      <br />
       <input
         type="password"
-        placeholder="New password"
+        placeholder="New Password"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
       />
-      <br />
       <input
         type="password"
-        placeholder="Confirm new password"
+        placeholder="Confirm New Password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
-      <br />
       <button onClick={handleChangePassword}>Change Password</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {message && <p style={{ color: "green" }}>{message}</p>}
+
+      {message && <div style={{ color: "green" }}>{message}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
+
+      <hr style={{ margin: "20px 0" }} />
+      <button onClick={handleLogout} style={{ backgroundColor: "#f00", color: "#fff" }}>
+        Logout
+      </button>
     </div>
   );
 };
