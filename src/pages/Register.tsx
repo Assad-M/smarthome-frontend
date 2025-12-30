@@ -59,6 +59,8 @@ console.log("Register response:", response.data);
       <select value={role} onChange={(e) => setRole(e.target.value)}>
         <option value="user">User</option>
         <option value="provider">Provider</option>
+        <option value="admin">Admin (testing only)</option>
+
       </select>
       <br />
       <button style={{ marginTop: "20px" }} onClick={handleRegister}>
