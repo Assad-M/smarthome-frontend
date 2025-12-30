@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/api";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { login } = useAuth();
@@ -50,6 +51,9 @@ const handleLogin = async () => {
         Login
       </button>
       {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
+      <div style={{ marginTop: "20px" }}>
+        <Link to="/register">Don't have an account? Register here</Link>
+      </div>
     </div>
   );
 };
