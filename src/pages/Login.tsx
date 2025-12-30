@@ -51,8 +51,12 @@ const handleLogin = async () => {
         Login
       </button>
       {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
-      <div style={{ marginTop: "20px" }}>
-        <Link to="/register">Don't have an account? Register here</Link>
+      <div style={{ marginTop: "10px" }}>
+  Don't have an account?{" "}
+  <Link to="/register" style={{ color: "blue", textDecoration: "underline" }}>
+    Register
+  </Link>
+
       </div>
     </div>
   );
