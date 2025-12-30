@@ -1,39 +1,40 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/api";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
- 
-const handleLogin = async () => {
-  try {
-    // Send "email" (not "username")
-    const response = await api.post("/auth/login", {
-      email: username, // or rename your state to "email" to avoid confusion
-      password,
-    });
+  const handleLogin = async () => {
+    try {
+      const response = await api.post("/auth/login", {
+        email: username, // or username based on backend
+        password,
+      });
 
-    // Read token and role correctly based on your backend response
-    const token = response.data?.token;
-    const role = response.data?.user?.role;
+      const token = response.data?.token;
+      const role = response.data?.user?.role;
 
-    // If your login context expects { role, token }:
-    login({ role, token });
-  } catch (err: any) {
-    setError(err.response?.data?.message || "Login failed");
-  }
-};
+      login({ role, token });
+
+      // Redirect based on role or default dashboard
+      if (role === "provider") navigate("/provider-dashboard");
+      else navigate("/user-dashboard");
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Login failed");
+    }
+  };
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Login</h1>
       <input
-        placeholder="Username"
+        placeholder="Email"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
@@ -45,18 +46,16 @@ const handleLogin = async () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <br />
-      
-      <br />
       <button style={{ marginTop: "20px" }} onClick={handleLogin}>
         Login
       </button>
       {error && <div style={{ color: "red", marginTop: "10px" }}>{error}</div>}
-      <div style={{ marginTop: "10px" }}>
-  Don't have an account?{" "}
-  <Link to="/register" style={{ color: "blue", textDecoration: "underline" }}>
-    Register
-  </Link>
 
+      <div style={{ marginTop: "10px" }}>
+        Don't have an account?{" "}
+        <Link to="/register" style={{ color: "blue", textDecoration: "underline" }}>
+          Register
+        </Link>
       </div>
     </div>
   );
