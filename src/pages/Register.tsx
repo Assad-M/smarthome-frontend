@@ -4,7 +4,7 @@ import api from "../api/api";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [name, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user"); // default role
@@ -12,7 +12,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      await api.post("/auth/register", { username, email, password, role });
+      await api.post("/auth/register", { name, email, password, role });
       navigate("/login"); // go to login after successful registration
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed");
@@ -24,7 +24,7 @@ const Register = () => {
       <h1>Register</h1>
       <input
         placeholder="Username"
-        value={username}
+        value={name}
         onChange={(e) => setUsername(e.target.value)}
       />
       <br />
