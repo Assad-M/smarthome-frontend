@@ -16,15 +16,9 @@ interface Props {
 
 const AvailableServicesTab: React.FC<Props> = ({
   services,
-  selectedService,
+  
   setSelectedService,
-  bookingDate,
-  setBookingDate,
-  workers,
-  setWorkers,
-  estimateHours,
-  estimatePrice,
-  confirmBooking,
+
 }) => {
   // --------------------
   // Filters state
