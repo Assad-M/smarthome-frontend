@@ -8,7 +8,6 @@ import UserDashboard from "./pages/User/UserDashboard";
 import ProviderDashboard from "./pages/Provider/ProviderDashboard";
 
 
-import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
