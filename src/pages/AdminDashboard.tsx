@@ -48,7 +48,7 @@ const AdminDashboard: React.FC = () => {
   const [servicesLoading, setServicesLoading] = useState<boolean>(false);
   const [bookingsLoading, setBookingsLoading] = useState<boolean>(false);
 
-  const [error, setError] = useState<string | null>(null);
+  const [_error, setError] = useState<string | null>(null);
 
   // Filters
   const [userSearch, setUserSearch] = useState<string>("");

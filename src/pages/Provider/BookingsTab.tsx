@@ -7,7 +7,7 @@ interface Props {
   refreshBookings: () => Promise<void>;
 }
 
-const BookingsTab: React.FC<Props> = ({ bookings, setBookings, refreshBookings }) => {
+const BookingsTab: React.FC<Props> = ({ bookings, setBookings: _setBookings, refreshBookings }) => {
 
   // Generic function to update booking status
   const updateStatus = async (id: number, status: string) => {
